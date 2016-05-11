@@ -1,0 +1,56 @@
+import javax.swing.*;
+import java.awt.*;
+
+/**
+ * Created by dan on 5/9/16.
+ */
+
+public class BoardPanel extends JPanel {
+    public static final Color DEFAULT_TILE_COLOR = new Color(238, 238, 238);
+
+    private Board board;
+
+    public BoardPanel() {}
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Color oldColor = g.getColor();
+
+        final int xOffset = 10;
+        final int yOffset = 10;
+        final int tileWidth = (getWidth() - xOffset*2) / board.getTiles()[0].length;
+        final int tileHeight = tileWidth;
+
+        for (int row = 0; row < Board.NUM_ROWS; row++) {
+            for (int col = 0; col < Board.NUM_COLS; col++) {
+                int x = xOffset + tileWidth*col;
+                int y = yOffset + tileHeight * row;
+
+                // white outline
+                g.setColor(Color.WHITE);
+                g.drawRect(x, y, tileWidth, tileHeight);
+
+                // fill of actual color
+                g.setColor(board.getTiles()[row][col].getColor());
+                g.fillRect(x + 1, y + 1, tileWidth - 1, tileHeight - 1);
+            }
+        }
+
+        g.setColor(oldColor);
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+
+        board.forEachTile(tile -> {
+            if (tile.getColor() == null) {
+                tile.setColor(DEFAULT_TILE_COLOR);
+            }
+        });
+    }
+}
