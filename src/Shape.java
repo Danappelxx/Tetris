@@ -47,6 +47,19 @@ public abstract class Shape {
 
     public void rotate() {
         // TODO: Implement
+        Tile[][] rotated = new Tile[NUM_ROWS][NUM_COLS];
+
+        for (int x = 0; x < NUM_ROWS; x++) {
+            for (int y = 0; y < NUM_ROWS; y++) {
+                rotated[x][y] = tiles[NUM_ROWS - y - 1][x];
+            }
+        }
+
+        for (int y = 0; y < NUM_ROWS; y++) {
+            for (int x = 0; x < NUM_COLS; x++) {
+                tiles[y][x] = rotated[y][x];
+            }
+        }
     }
 
     public boolean isATile(int row, int col) {

@@ -9,9 +9,9 @@ public class FiveAcrossShape extends Shape {
 
     protected String[] getStringRepresentation() {
         return new String[]{
+                "-----",
+                "-----",
                 "xxxxx",
-                "-----",
-                "-----",
                 "-----",
                 "-----"
         };

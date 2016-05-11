@@ -8,9 +8,9 @@ public class ThreeAcrossOneUpShape extends Shape {
 
     protected String[] getStringRepresentation() {
         return new String[]{
-                "-x---",
-                "xxx--",
                 "-----",
+                "--x--",
+                "-xxx--",
                 "-----",
                 "-----"
         };
