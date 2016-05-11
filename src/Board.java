@@ -58,4 +58,11 @@ public class Board {
             }
         }
     }
+
+    public int getWidth() {
+        return tiles[0].length;
+    }
+    public int getHeight() {
+        return tiles.length;
+    }
 }

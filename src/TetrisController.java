@@ -56,7 +56,7 @@ public class TetrisController {
     private void tick(boolean shouldShiftDown) {
         if (shouldShiftDown) model.shiftDownIfPossible();
 
-        model.makeShapeInMotionIfNecessary();
+        model.createShapeInMotionIfNecessary();
 
         TetrisViewModel viewModel = new TetrisViewModel(model);
         view.configure(viewModel);

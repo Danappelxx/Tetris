@@ -1,4 +1,6 @@
-import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Created by dan on 5/9/16.
@@ -16,13 +18,23 @@ public class ShapeInMotion {
 
     public Point relativePoint(Point other) {
         return new Point(
-            (int)other.getX() + x,
-            (int)other.getY() + y);
+            other.getX() + x,
+            other.getY() + y);
+    }
+
+    public List<Point> getHighestPoints() {
+        return shape.getHighestPoints()
+                .stream()
+                .map(this::relativePoint)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public Shape getShape() {
         return shape;
     }
+
+    public int getRelativeX() { return shape.getLeftmostPoint().getX() + x; }
+    public int getRelativeY() { return shape.getLowestPoint().getY() + y; }
 
     public int getX() {
         return x;

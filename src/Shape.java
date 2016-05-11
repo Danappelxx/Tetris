@@ -1,3 +1,5 @@
+import com.sun.istack.internal.NotNull;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,20 +47,35 @@ public abstract class Shape {
         }
     }
 
+    /**
+     * Rotates the tiles using the center as the center of rotation.
+     * Shape should be in the middle for the result to be correct.
+     */
     public void rotate() {
-        // TODO: Implement
         Tile[][] rotated = new Tile[NUM_ROWS][NUM_COLS];
 
+        // rotate current tiles, store in `rotated`
         for (int x = 0; x < NUM_ROWS; x++) {
             for (int y = 0; y < NUM_ROWS; y++) {
                 rotated[x][y] = tiles[NUM_ROWS - y - 1][x];
             }
         }
 
+        // copy `rotated` back to current tiles
         for (int y = 0; y < NUM_ROWS; y++) {
             for (int x = 0; x < NUM_COLS; x++) {
                 tiles[y][x] = rotated[y][x];
             }
+        }
+    }
+
+    @NotNull
+    public static Shape createRandomShape() {
+        Class<?> shapeClass = Shape.SHAPE_CLASSES[(int)(Math.random() * Shape.SHAPE_CLASSES.length)];
+        try {
+            return ((Class<Shape>)shapeClass).newInstance();
+        } catch (Exception e) {
+            return null;
         }
     }
 
@@ -99,7 +116,7 @@ public abstract class Shape {
     public List<Point> getHighestPoints() {
         List<Point> points = new ArrayList<Point>();
 
-        int highestY = (int)getHighestPoint().getY();
+        int highestY = getHighestPoint().getY();
         for (int x = 0; x < NUM_COLS; x++)
             if (tiles[highestY][x] != null) points.add(new Point(x, highestY));
 
@@ -119,7 +136,7 @@ public abstract class Shape {
 
         for (int x = 0; x < NUM_COLS; x++) {
             int curr = getLowestYForX(x);
-            if (curr < smallestY) {
+            if (curr > -1 && curr < smallestY) {
                 smallestY = curr;
                 smallestX = x;
             }
@@ -130,7 +147,7 @@ public abstract class Shape {
     public List<Point> getLowestPoints() {
         List<Point> points = new ArrayList<Point>();
 
-        int lowestY = (int)getLowestPoint().getY();
+        int lowestY = getLowestPoint().getY();
         for (int x = 0; x < NUM_COLS; x++)
             if (tiles[lowestY][x] != null) points.add(new Point(x, lowestY));
 
@@ -155,6 +172,18 @@ public abstract class Shape {
     }
 
     public int getWidth() {
-        return (int)(getRightmostPoint().getX() - getLeftmostPoint().getX()) + 1;
+        return getRightmostPoint().getX() - getLeftmostPoint().getX() + 1;
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+        for (int y = 0; y < NUM_ROWS; y++) {
+            for (int x = 0; x < NUM_COLS; x++) {
+                result += tiles[y][x] == null ? "-" : "x";
+            }
+            result += "\n";
+        }
+        return result;
     }
 }

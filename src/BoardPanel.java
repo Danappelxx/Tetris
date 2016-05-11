@@ -40,10 +40,6 @@ public class BoardPanel extends JPanel {
         g.setColor(oldColor);
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
     public void setBoard(Board board) {
         this.board = board;
 
