@@ -15,7 +15,7 @@ public class ShapeTest extends TestCase {
             return new String[]{
                     "-----",
                     "--xx-",
-                    "-xxx-",
+                    "-xx--",
                     "-----",
                     "-----"
             };
@@ -56,6 +56,18 @@ public class ShapeTest extends TestCase {
     public void testGetHighestPoints() throws Exception {
         List<Point> points = testShape.getHighestPoints();
 
+        assertEquals(points.size(), 2);
+
+        assertEquals(points.get(0).getX(), 1);
+        assertEquals(points.get(0).getY(), 2);
+
+        assertEquals(points.get(1).getX(), 2);
+        assertEquals(points.get(1).getY(), 2);
+    }
+
+    public void testGetHighestPointsForEachX() throws Exception {
+        List<Point> points = testShape.getHighestPointsForEachX();
+
         assertEquals(points.size(), 3);
 
         assertEquals(points.get(0).getX(), 1);
@@ -65,7 +77,7 @@ public class ShapeTest extends TestCase {
         assertEquals(points.get(1).getY(), 2);
 
         assertEquals(points.get(2).getX(), 3);
-        assertEquals(points.get(2).getY(), 2);
+        assertEquals(points.get(2).getY(), 1);
     }
 
     public void testGetLowestYForX() throws Exception {
@@ -122,7 +134,7 @@ public class ShapeTest extends TestCase {
         String original =
                 "-----\n" +
                 "--xx-\n" +
-                "-xxx-\n" +
+                "-xx--\n" +
                 "-----\n" +
                 "-----\n";
         assertEquals(testShape.toString(), original);
@@ -133,7 +145,7 @@ public class ShapeTest extends TestCase {
                 "-----\n" +
                 "--x--\n" +
                 "--xx-\n" +
-                "--xx-\n" +
+                "---x-\n" +
                 "-----\n";
         assertEquals(testShape.toString(), rotated);
     }
@@ -142,7 +154,7 @@ public class ShapeTest extends TestCase {
         String expected =
                 "-----\n" +
                 "--xx-\n" +
-                "-xxx-\n" +
+                "-xx--\n" +
                 "-----\n" +
                 "-----\n";
         assertEquals(testShape.toString(), expected);

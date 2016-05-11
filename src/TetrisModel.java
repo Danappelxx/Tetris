@@ -65,7 +65,7 @@ public class TetrisModel {
     // MARK: Movement logic
     private boolean canShapeGoDown() {
 
-        List<Point> shapeHighestPoints = shapeInMotion.getHighestPoints();
+        List<Point> shapeHighestPoints = shapeInMotion.getHighestPointsForEachX();
         int boardHighestY = board.getTiles().length - 1;
 
         // check if it is at the floor

@@ -29,6 +29,13 @@ public class ShapeInMotion {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public List<Point> getHighestPointsForEachX() {
+        return shape.getHighestPointsForEachX()
+                .stream()
+                .map(this::relativePoint)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
     public Shape getShape() {
         return shape;
     }

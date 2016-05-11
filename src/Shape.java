@@ -175,6 +175,18 @@ public abstract class Shape {
         return getRightmostPoint().getX() - getLeftmostPoint().getX() + 1;
     }
 
+    /**
+     * Returns a list of points representing the highest Y for that X
+     */
+    public List<Point> getHighestPointsForEachX() {
+        List<Point> points = new ArrayList<Point>();
+        for (int x = 0; x < NUM_COLS; x++) {
+            int y = getHighestYForX(x);
+            if (y >= 0) points.add(new Point(x, y));
+        }
+        return points;
+    }
+
     @Override
     public String toString() {
         String result = "";
