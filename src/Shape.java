@@ -20,6 +20,11 @@ public abstract class Shape {
         Color.YELLOW
     };
 
+    public static final Class<?>[] SHAPE_CLASSES = new Class<?>[]{
+            FiveAcrossShape.class,
+            ThreeAcrossOneUpShape.class
+    };
+
     protected Tile[][] tiles = new Tile[NUM_ROWS][NUM_COLS];
 
     protected Color color;
@@ -27,7 +32,6 @@ public abstract class Shape {
     protected abstract String[] getStringRepresentation();
 
     public Shape() {
-        // TODO: Generate color randomly
         color = COLORS[(int)(Math.random()*COLORS.length)];
 
         for (int row = 0; row < NUM_ROWS; row++) {

@@ -16,8 +16,12 @@ public class TetrisModel {
     }
 
     private Shape makeRandomShape() {
-        // TODO: Get shape randomly
-        return new FiveAcrossShape();
+        Class<?> shapeClass = Shape.SHAPE_CLASSES[(int)(Math.random() * Shape.SHAPE_CLASSES.length)];
+        try {
+            return ((Class<Shape>)shapeClass).newInstance();
+        } catch (Exception e) {
+            return null;
+        }
     }
     public void makeShapeInMotionIfNecessary() {
         if (shapeInMotion != null) return;
