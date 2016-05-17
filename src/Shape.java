@@ -61,11 +61,17 @@ public abstract class Shape {
             }
         }
 
-        // copy `rotated` back to current tiles
-        for (int y = 0; y < NUM_ROWS; y++) {
-            for (int x = 0; x < NUM_COLS; x++) {
-                tiles[y][x] = rotated[y][x];
-            }
+        this.tiles = rotated;
+    }
+
+    public Shape copy() {
+        try {
+            Shape copy = this.getClass().newInstance();
+            copy.tiles = this.tiles;
+            copy.color = this.color;
+            return copy;
+        } catch (Exception e) {
+            return null;
         }
     }
 

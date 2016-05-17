@@ -50,6 +50,20 @@ public class ShapeInMotion {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public ShapeInMotion copy() {
+        Shape shapeCopy = shape.copy();
+        return new ShapeInMotion(shapeCopy, x, y);
+    }
+
+    public List<Point> getPoints() {
+        List<Point> points = new ArrayList<Point>();
+        for (int x = 0; x < Shape.NUM_COLS; x++)
+            for (int y = 0; y < Shape.NUM_ROWS; y++)
+                if (shape.tiles[y][x] != null)
+                    points.add(this.relativePoint(new Point(x, y)));
+        return points;
+    }
+
     public Shape getShape() {
         return shape;
     }

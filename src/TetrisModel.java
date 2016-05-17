@@ -106,7 +106,7 @@ public class TetrisModel {
 
         // check if it is next to the wall
         for (Point point: shapeRightmostPoints) {
-            if (point.getX() >= board.getWidth()) return false;
+            if (point.getX() >= board.getWidth() - 1) return false;
         }
 
         // check if its rightmost tiles have a tile to the right of them
@@ -119,7 +119,32 @@ public class TetrisModel {
         return true;
     }
     private boolean canShapeRotate() {
-        // TODO: Implement
+
+        // create a copy so that work is not destructive
+        ShapeInMotion shapeInMotion = this.shapeInMotion.copy();
+
+        // rotate copy
+        shapeInMotion.getShape().rotate();
+
+        List<Point> points = shapeInMotion.getPoints();
+
+        // ensure that no points of the rotated shape are out of bounds
+        Boolean outOfBounds = points.stream()
+                .anyMatch(point -> !(
+                    point.getX() >= 0 &&
+                    point.getX() < board.getWidth() &&
+                    point.getY() >= 0 &&
+                    point.getY() < board.getHeight()
+                ));
+
+        if (outOfBounds) return false;
+
+        // ensure that no points of the rotated shape overlap with current points on the board
+        Boolean overlaps = points.stream()
+                .anyMatch(point -> this.board.getTiles()[point.getY()][point.getX()] != null);
+
+        if (overlaps) return false;
+
         return true;
     }
 
