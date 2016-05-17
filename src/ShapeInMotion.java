@@ -36,6 +36,20 @@ public class ShapeInMotion {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public List<Point> getLeftmostPointsForEachY() {
+        return shape.getLeftmostPointsForEachY()
+                .stream()
+                .map(this::relativePoint)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public List<Point> getRightmostPointsForEachY() {
+        return shape.getRightmostPointsForEachY()
+                .stream()
+                .map(this::relativePoint)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
     public Shape getShape() {
         return shape;
     }

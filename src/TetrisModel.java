@@ -84,19 +84,37 @@ public class TetrisModel {
     }
     private boolean canShapeGoLeft() {
 
-        // check if it is next to the wall
-        if (shapeInMotion.getRelativeX() <= 0) return false;
+        List<Point> shapeLeftmostPoints = shapeInMotion.getLeftmostPointsForEachY();
 
-        // TODO: check if its leftmost tiles dont have a tile to the left of them
+        // check if it is next to the wall
+        for (Point point: shapeLeftmostPoints) {
+            if (point.getX() <= 0) return false;
+        }
+
+        // check if its leftmost tiles have a tile to the left of them
+        for (Point point: shapeLeftmostPoints) {
+            Tile tileLeft = board.getTiles()[point.getY()][point.getX() - 1];
+
+            if (tileLeft != null) return false;
+        }
 
         return true;
     }
     private boolean canShapeGoRight() {
 
-        // check if it is next to the right wall
-        if (shapeInMotion.getRelativeX() + shapeInMotion.getShape().getWidth() >= board.getWidth()) return false;
+        List<Point> shapeRightmostPoints = shapeInMotion.getRightmostPointsForEachY();
 
-        // TODO: check if its rightmost tiles dont have a tile to the right of them
+        // check if it is next to the wall
+        for (Point point: shapeRightmostPoints) {
+            if (point.getX() >= board.getWidth()) return false;
+        }
+
+        // check if its rightmost tiles have a tile to the right of them
+        for (Point point: shapeRightmostPoints) {
+            Tile tileRight = board.getTiles()[point.getY()][point.getX() + 1];
+
+            if (tileRight != null) return false;
+        }
 
         return true;
     }

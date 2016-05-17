@@ -116,11 +116,55 @@ public class ShapeTest extends TestCase {
         assertEquals(point.getY(), 2);
     }
 
+    public void testGetLeftmostXForY() throws Exception {
+        int for0 = testShape.getLeftmostXForY(0);
+        int for1 = testShape.getLeftmostXForY(1);
+        int for2 = testShape.getLeftmostXForY(2);
+
+        assertEquals(for0, -1);
+        assertEquals(for1, 2);
+        assertEquals(for2, 1);
+    }
+
+    public void testGetLeftmostPointForEachY() throws Exception {
+        List<Point> points = testShape.getLeftmostPointsForEachY();
+
+        assertEquals(points.size(), 2);
+
+        assertEquals(points.get(0).getX(), 2);
+        assertEquals(points.get(0).getY(), 1);
+
+        assertEquals(points.get(1).getX(), 1);
+        assertEquals(points.get(1).getY(), 2);
+    }
+
     public void testGetRightmostPoint() throws Exception {
         Point point = testShape.getRightmostPoint();
 
         assertEquals(point.getX(), 3);
         assertEquals(point.getY(), 1);
+    }
+
+    public void testGetRightmostXForY() throws Exception {
+        int for0 = testShape.getRightmostXForY(0);
+        int for1 = testShape.getRightmostXForY(1);
+        int for2 = testShape.getRightmostXForY(2);
+
+        assertEquals(for0, -1);
+        assertEquals(for1, 3);
+        assertEquals(for2, 2);
+    }
+
+    public void testGetRightmostPointForEachY() throws Exception {
+        List<Point> points = testShape.getRightmostPointsForEachY();
+
+        assertEquals(points.size(), 2);
+
+        assertEquals(points.get(0).getX(), 3);
+        assertEquals(points.get(0).getY(), 1);
+
+        assertEquals(points.get(1).getX(), 2);
+        assertEquals(points.get(1).getY(), 2);
     }
 
     public void testGetWidth() throws Exception {

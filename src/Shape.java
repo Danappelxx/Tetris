@@ -154,6 +154,20 @@ public abstract class Shape {
         return points;
     }
 
+    public int getLeftmostXForY(int y) {
+        Tile[] row = getRow(y);
+        for (int x = 0; x < row.length; x++) {
+            if (row[x] != null) return x;
+        }
+        return -1;
+    }
+    public int getRightmostXForY(int y) {
+        Tile[] row = getRow(y);
+        for (int x = row.length - 1; x >= 0; x--) {
+            if (row[x] != null) return x;
+        }
+        return -1;
+    }
     public Point getLeftmostPoint() {
         for (int x = 0; x < NUM_COLS; x++) {
             for (int y = 0; y < NUM_ROWS; y++) {
@@ -183,6 +197,30 @@ public abstract class Shape {
         for (int x = 0; x < NUM_COLS; x++) {
             int y = getHighestYForX(x);
             if (y >= 0) points.add(new Point(x, y));
+        }
+        return points;
+    }
+
+    /**
+     * Returns a list of points representing the lowest X for that Y
+     */
+    public List<Point> getLeftmostPointsForEachY() {
+        List<Point> points = new ArrayList<Point>();
+        for (int y = 0; y < NUM_ROWS; y++) {
+            int x = getLeftmostXForY(y);
+            if (x >= 0) points.add(new Point(x, y));
+        }
+        return points;
+    }
+
+    /**
+     * Returns a list of points representing the highest X for that Y
+     */
+    public List<Point> getRightmostPointsForEachY() {
+        List<Point> points = new ArrayList<Point>();
+        for (int y = 0; y < NUM_ROWS; y++) {
+            int x = getRightmostXForY(y);
+            if (x >= 0) points.add(new Point(x, y));
         }
         return points;
     }
