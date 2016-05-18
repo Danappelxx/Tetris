@@ -28,14 +28,20 @@ public class TetrisModel {
         return new ShapeInMotion(shape, x, y);
     }
 
-    public void createShapeInMotionIfNecessary() {
+    public void createShapeInMotionIfNecessary() throws TetrisController.GameOverException {
         if (shapeInMotion != null) return;
-        this.shapeInMotion = createShapeInMotion();
+
+        ShapeInMotion shapeInMotion = createShapeInMotion();
+
+        // ensure that no points of the rotated shape overlap with current points on the board
+        Boolean overlaps = shapeInMotion.getPoints().stream()
+                .anyMatch(point -> this.board.getTiles()[point.getY()][point.getX()] != null);
+
+        if (overlaps) throw new TetrisController.GameOverException();
+
+        this.shapeInMotion = shapeInMotion;
     }
 
-    private void canShapeInMotionExist() {
-
-    }
 
     // MARK: Executing movement
     public void shiftDownIfPossible() {
