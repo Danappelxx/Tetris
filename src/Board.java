@@ -1,4 +1,6 @@
 import java.util.function.Consumer;
+import Shapes.Shape;
+import Util.Tile;
 
 /**
  * Created by dan on 5/10/16.

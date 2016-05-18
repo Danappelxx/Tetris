@@ -1,3 +1,6 @@
+import Util.Point;
+import Util.Tile;
+import Shapes.Shape;
 import java.util.List;
 
 /**
@@ -13,9 +16,7 @@ public class TetrisModel {
         this.board = new Board();
     }
 
-    public void createShapeInMotionIfNecessary() {
-        if (shapeInMotion != null) return;
-
+    private ShapeInMotion createShapeInMotion() {
         Shape shape = Shape.createRandomShape();
 
         int minX = 0;
@@ -24,7 +25,16 @@ public class TetrisModel {
         int x = (int)(Math.random() * maxX) + minX;
         int y = 0 - shape.getLowestPoint().getY();
 
-        this.shapeInMotion = new ShapeInMotion(shape, x, y);
+        return new ShapeInMotion(shape, x, y);
+    }
+
+    public void createShapeInMotionIfNecessary() {
+        if (shapeInMotion != null) return;
+        this.shapeInMotion = createShapeInMotion();
+    }
+
+    private void canShapeInMotionExist() {
+
     }
 
     // MARK: Executing movement
@@ -146,7 +156,6 @@ public class TetrisModel {
 
         return true;
     }
-
 
     public ShapeInMotion getShapeInMotion() {
         return shapeInMotion;

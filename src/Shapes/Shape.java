@@ -1,8 +1,11 @@
-import com.sun.istack.internal.NotNull;
+package Shapes;
 
+import com.sun.istack.internal.NotNull;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import Util.Tile;
+import Util.Point;
 
 /**
  * Created by dan on 5/9/16.
@@ -23,11 +26,16 @@ public abstract class Shape {
     };
 
     public static final Class<?>[] SHAPE_CLASSES = new Class<?>[]{
-            FiveAcrossShape.class,
-            ThreeAcrossOneUpShape.class
+            FiveAcross.class,
+            ThreeAcrossOneDownLeft.class,
+            ThreeAcrossOneDownRight.class,
+            ThreeAcrossOneUp.class,
+            TwoAcrossTwoAcross.class,
+            TwoAcrossTwoAcrossLeft.class,
+            TwoAcrossTwoAcrossRight.class
     };
 
-    protected Tile[][] tiles = new Tile[NUM_ROWS][NUM_COLS];
+    private Tile[][] tiles = new Tile[NUM_ROWS][NUM_COLS];
 
     protected Color color;
 
@@ -242,4 +250,6 @@ public abstract class Shape {
         }
         return result;
     }
+
+    public Tile[][] getTiles() { return this.tiles; }
 }

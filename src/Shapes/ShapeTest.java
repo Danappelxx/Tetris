@@ -1,3 +1,6 @@
+package Shapes;
+
+import Util.Point;
 import junit.framework.TestCase;
 import java.util.List;
 

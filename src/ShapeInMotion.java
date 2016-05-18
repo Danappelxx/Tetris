@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import Shapes.Shape;
+import Util.Point;
 
 /**
  * Created by dan on 5/9/16.
@@ -59,7 +61,7 @@ public class ShapeInMotion {
         List<Point> points = new ArrayList<Point>();
         for (int x = 0; x < Shape.NUM_COLS; x++)
             for (int y = 0; y < Shape.NUM_ROWS; y++)
-                if (shape.tiles[y][x] != null)
+                if (shape.getTiles()[y][x] != null)
                     points.add(this.relativePoint(new Point(x, y)));
         return points;
     }
