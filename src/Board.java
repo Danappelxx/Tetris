@@ -41,7 +41,6 @@ public class Board {
     /**
      * Takes the shape's tiles and adds them to the Board.
      */
-    //TODO: Move this somewhere better
     public void addShapeInMotion(ShapeInMotion shapeInMotion) {
         if (shapeInMotion == null) { return; }
 

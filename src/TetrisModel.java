@@ -20,10 +20,9 @@ public class TetrisModel {
 
         int minX = 0;
         int maxX = board.getWidth() - shape.getWidth();
-        int x = (int)(Math.random() * maxX) + minX;
 
-        // TODO: do this correctly
-        int y = shape.getLowestPoint().getY();
+        int x = (int)(Math.random() * maxX) + minX;
+        int y = 0 - shape.getLowestPoint().getY();
 
         this.shapeInMotion = new ShapeInMotion(shape, x, y);
     }
