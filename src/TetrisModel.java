@@ -13,7 +13,7 @@ public class TetrisModel {
     private Board board;
 
     public TetrisModel() {
-        this.board = new Board();
+        this.board = new Board(20, 10);
     }
 
     // Mark: Smart Factory Methods

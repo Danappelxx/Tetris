@@ -19,11 +19,11 @@ public class BoardPanel extends JPanel {
 
         final int xOffset = 10;
         final int yOffset = 10;
-        final int tileWidth = (getWidth() - xOffset*2) / board.getTiles()[0].length;
+        final int tileWidth = (getWidth() - xOffset*2) / board.numCols;
         final int tileHeight = tileWidth;
 
-        for (int row = 0; row < Board.NUM_ROWS; row++) {
-            for (int col = 0; col < Board.NUM_COLS; col++) {
+        for (int row = 0; row < board.numRows; row++) {
+            for (int col = 0; col < board.numCols; col++) {
                 int x = xOffset + tileWidth*col;
                 int y = yOffset + tileHeight * row;
 

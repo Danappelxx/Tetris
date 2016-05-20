@@ -7,17 +7,21 @@ import Util.Tile;
  */
 
 public class Board {
-    public static final int NUM_COLS = 10;
-    public static final int NUM_ROWS = 20;
+    public final int numRows;
+    public final int numCols;
 
-    private Tile[][] tiles = new Tile[NUM_ROWS][NUM_COLS];
+    private Tile[][] tiles;
 
-    public Board() {
+    public Board(int numRows, int numCols) {
+        this.numRows = numRows;
+        this.numCols = numCols;
+        this.tiles = new Tile[numRows][numCols];
     }
 
     public Board(Board from) {
-        for (int row = 0; row < NUM_ROWS; row++)
-            for (int col = 0; col < NUM_COLS; col++)
+        this(from.numRows, from.numCols);
+        for (int row = 0; row < numRows; row++)
+            for (int col = 0; col < numCols; col++)
                 tiles[row][col] = from.getTiles()[row][col];
     }
 
@@ -28,16 +32,44 @@ public class Board {
     }
 
     public void fillBlank() {
-        for (int row = 0; row < NUM_ROWS; row++)
-            for (int col = 0; col < NUM_COLS; col++)
+        for (int row = 0; row < numRows; row++)
+            for (int col = 0; col < numCols; col++)
                 if (tiles[row][col] == null)
                     tiles[row][col] = new Tile();
-
     }
 
+    public void removeRow(int row) {
+
+        // remove every tile in the row
+        for (int x = 0; x < numCols; x++) {
+            tiles[row][x] = null;
+        }
+
+        // shift down every row above it
+        for (int y = row - 1; y >= 0; y--)
+            tiles[y+1] = tiles[y];
+
+        // remove topmost row
+        tiles[0] = new Tile[numCols];
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+        for (int y = 0; y < numRows; y++) {
+            for (int x = 0; x < numCols; x++) {
+                result += tiles[y][x] == null ? "-" : "x";
+            }
+            result += "\n";
+        }
+        return result;
+    }
     // MARK: Getters & Setters
     public Tile[][] getTiles() {
         return tiles;
+    }
+    void setTiles(Tile[][] tiles) {
+        this.tiles = tiles;
     }
 
     public int getWidth() {
