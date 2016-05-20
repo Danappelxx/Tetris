@@ -20,7 +20,7 @@ public class TetrisViewModel {
         board.fillBlank();
 
         // stamp the shape onto the board
-        board.addShapeInMotion(model.getShapeInMotion());
+        model.getShapeInMotion().addToBoard(board);
     }
 
     public Board getBoard() {

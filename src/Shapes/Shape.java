@@ -93,152 +93,6 @@ public abstract class Shape {
         }
     }
 
-    public boolean isATile(int row, int col) {
-        return tiles[row][col] != null;
-    }
-    public Tile getTile(int row, int col) { return tiles[row][col]; }
-
-    public Tile[] getRow(int row) { return tiles[row]; }
-    public Tile[] getCol(int col) {
-        Tile[] colArr = new Tile[NUM_COLS];
-        for (int row = 0; row < NUM_ROWS; row++)
-            colArr[row] = tiles[row][col];
-        return colArr;
-    }
-
-    public int getHighestYForX(int x) {
-        Tile[] col = getCol(x);
-        for (int y = col.length - 1; y >= 0; y--) {
-            if (col[y] != null) return y;
-        }
-        return -1;
-    }
-    public Point getHighestPoint() {
-        int largestY = -1;
-        int largestX = -1;
-
-        for (int x = 0; x < NUM_COLS; x++) {
-            int curr = getHighestYForX(x);
-            if (curr > largestY) {
-                largestY = curr;
-                largestX = x;
-            }
-        }
-
-        return new Point(largestX, largestY);
-    }
-    public List<Point> getHighestPoints() {
-        List<Point> points = new ArrayList<Point>();
-
-        int highestY = getHighestPoint().getY();
-        for (int x = 0; x < NUM_COLS; x++)
-            if (tiles[highestY][x] != null) points.add(new Point(x, highestY));
-
-        return points;
-    }
-
-    public int getLowestYForX(int x) {
-        Tile[] col = getCol(x);
-        for (int y = 0; y < col.length; y++) {
-            if (col[y] != null) return y;
-        }
-        return -1;
-    }
-    public Point getLowestPoint() {
-        int smallestY = Integer.MAX_VALUE;
-        int smallestX = Integer.MAX_VALUE;
-
-        for (int x = 0; x < NUM_COLS; x++) {
-            int curr = getLowestYForX(x);
-            if (curr > -1 && curr < smallestY) {
-                smallestY = curr;
-                smallestX = x;
-            }
-        }
-
-        return new Point(smallestX, smallestY);
-    }
-    public List<Point> getLowestPoints() {
-        List<Point> points = new ArrayList<Point>();
-
-        int lowestY = getLowestPoint().getY();
-        for (int x = 0; x < NUM_COLS; x++)
-            if (tiles[lowestY][x] != null) points.add(new Point(x, lowestY));
-
-        return points;
-    }
-
-    public int getLeftmostXForY(int y) {
-        Tile[] row = getRow(y);
-        for (int x = 0; x < row.length; x++) {
-            if (row[x] != null) return x;
-        }
-        return -1;
-    }
-    public int getRightmostXForY(int y) {
-        Tile[] row = getRow(y);
-        for (int x = row.length - 1; x >= 0; x--) {
-            if (row[x] != null) return x;
-        }
-        return -1;
-    }
-    public Point getLeftmostPoint() {
-        for (int x = 0; x < NUM_COLS; x++) {
-            for (int y = 0; y < NUM_ROWS; y++) {
-                if (tiles[y][x] != null) return new Point(x, y);
-            }
-        }
-        return null;
-    }
-    public Point getRightmostPoint() {
-        for (int x = NUM_COLS - 1; x >= 0; x--) {
-            for (int y = 0; y < NUM_ROWS; y++) {
-                if (tiles[y][x] != null) return new Point(x, y);
-            }
-        }
-        return null;
-    }
-
-    public int getWidth() {
-        return getRightmostPoint().getX() - getLeftmostPoint().getX() + 1;
-    }
-
-    /**
-     * Returns a list of points representing the highest Y for that X
-     */
-    public List<Point> getHighestPointsForEachX() {
-        List<Point> points = new ArrayList<Point>();
-        for (int x = 0; x < NUM_COLS; x++) {
-            int y = getHighestYForX(x);
-            if (y >= 0) points.add(new Point(x, y));
-        }
-        return points;
-    }
-
-    /**
-     * Returns a list of points representing the lowest X for that Y
-     */
-    public List<Point> getLeftmostPointsForEachY() {
-        List<Point> points = new ArrayList<Point>();
-        for (int y = 0; y < NUM_ROWS; y++) {
-            int x = getLeftmostXForY(y);
-            if (x >= 0) points.add(new Point(x, y));
-        }
-        return points;
-    }
-
-    /**
-     * Returns a list of points representing the highest X for that Y
-     */
-    public List<Point> getRightmostPointsForEachY() {
-        List<Point> points = new ArrayList<Point>();
-        for (int y = 0; y < NUM_ROWS; y++) {
-            int x = getRightmostXForY(y);
-            if (x >= 0) points.add(new Point(x, y));
-        }
-        return points;
-    }
-
     @Override
     public String toString() {
         String result = "";
@@ -251,5 +105,105 @@ public abstract class Shape {
         return result;
     }
 
-    public Tile[][] getTiles() { return this.tiles; }
+    // MARK: Getters & Setters
+    public Point getLowestPoint() {
+        for (int y = 0; y < NUM_ROWS; y++)
+            for (int x = 0; x < NUM_COLS; x++)
+                if (tiles[y][x] != null)
+                    return new Point(x, y);
+        return null;
+    }
+
+    public Point getLeftmostPoint() {
+        for (int x = 0; x < NUM_COLS; x++)
+            for (int y = 0; y < NUM_ROWS; y++)
+                if (tiles[y][x] != null)
+                    return new Point(x, y);
+        return null;
+    }
+
+    public Point getRightmostPoint() {
+        for (int x = NUM_COLS - 1; x >= 0; x--)
+            for (int y = 0; y < NUM_ROWS; y++)
+                if (tiles[y][x] != null)
+                    return new Point(x, y);
+        return null;
+    }
+
+
+    /**
+     * Returns a list of points representing the highest Y for that X
+     */
+    public List<Point> getHighestPoints() {
+        List<Point> points = new ArrayList<Point>();
+        for (int x = 0; x < NUM_COLS; x++) {
+            int y = getHighestYForX(x);
+            if (y >= 0) points.add(new Point(x, y));
+        }
+        return points;
+    }
+    int getHighestYForX(int x) {
+        Tile[] col = getCol(x);
+        for (int y = col.length - 1; y >= 0; y--) {
+            if (col[y] != null) return y;
+        }
+        return -1;
+    }
+
+    /**
+     * Returns a list of points representing the lowest X for that Y
+     */
+    public List<Point> getLeftmostPoints() {
+        List<Point> points = new ArrayList<Point>();
+        for (int y = 0; y < NUM_ROWS; y++) {
+            int x = getLeftmostXForY(y);
+            if (x >= 0) points.add(new Point(x, y));
+        }
+        return points;
+    }
+    int getLeftmostXForY(int y) {
+        Tile[] row = getRow(y);
+        for (int x = 0; x < row.length; x++) {
+            if (row[x] != null) return x;
+        }
+        return -1;
+    }
+
+    /**
+     * Returns a list of points representing the highest X for that Y
+     */
+    public List<Point> getRightmostPoints() {
+        List<Point> points = new ArrayList<Point>();
+        for (int y = 0; y < NUM_ROWS; y++) {
+            int x = getRightmostXForY(y);
+            if (x >= 0) points.add(new Point(x, y));
+        }
+        return points;
+    }
+    int getRightmostXForY(int y) {
+        Tile[] row = getRow(y);
+        for (int x = row.length - 1; x >= 0; x--) {
+            if (row[x] != null) return x;
+        }
+        return -1;
+    }
+
+
+    public int getWidth() {
+        return getRightmostPoint().getX() - getLeftmostPoint().getX() + 1;
+    }
+
+
+    public Tile[][] getTiles() {
+        return this.tiles;
+    }
+
+    public Tile[] getRow(int row) { return tiles[row]; }
+
+    public Tile[] getCol(int col) {
+        Tile[] colArr = new Tile[NUM_COLS];
+        for (int row = 0; row < NUM_ROWS; row++)
+            colArr[row] = tiles[row][col];
+        return colArr;
+    }
 }
