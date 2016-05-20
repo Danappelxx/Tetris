@@ -2,6 +2,8 @@
  * Created by dan on 5/10/16.
  */
 
+import Util.Board;
+
 /**
   * Middle ground between View and Model
   * - Controller creates ViewModel from Model

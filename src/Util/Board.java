@@ -1,6 +1,6 @@
+package Util;
+
 import java.util.function.Consumer;
-import Shapes.Shape;
-import Util.Tile;
 
 /**
  * Created by dan on 5/10/16.
@@ -10,7 +10,7 @@ public class Board {
     public final int numRows;
     public final int numCols;
 
-    private Tile[][] tiles;
+    protected Tile[][] tiles;
 
     public Board(int numRows, int numCols) {
         this.numRows = numRows;

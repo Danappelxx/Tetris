@@ -8,7 +8,7 @@ import java.util.List;
  * Created by dan on 5/11/16.
  */
 
-public class ShapeTest extends TestCase {
+public class ShapeBoardTest extends TestCase {
 
     private class TestShape extends Shape {
         public TestShape() {
@@ -25,44 +25,44 @@ public class ShapeTest extends TestCase {
         }
     }
 
-    Shape testShape;
+    ShapeBoard board;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        testShape = new TestShape();
+        board = new TestShape().getBoard();
     }
 
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        testShape = null;
+        board = null;
     }
 
 
     public void testGetWidth() throws Exception {
-        int width = testShape.getWidth();
-        System.out.println(testShape.toString());
+        int width = board.getWidth();
+        System.out.println(board.toString());
         assertEquals(width, 3);
     }
 
 
     public void testGetLowestPoint() throws Exception {
-        Point point = testShape.getLowestPoint();
+        Point point = board.getLowestPoint();
 
         assertEquals(point.getY(), 1);
         assertEquals(point.getX(), 2);
     }
 
     public void testGetLeftmostPoint() throws Exception {
-        Point point = testShape.getLeftmostPoint();
+        Point point = board.getLeftmostPoint();
 
         assertEquals(point.getX(), 1);
         assertEquals(point.getY(), 2);
     }
 
     public void testGetRightmostPoint() throws Exception {
-        Point point = testShape.getRightmostPoint();
+        Point point = board.getRightmostPoint();
 
         assertEquals(point.getX(), 3);
         assertEquals(point.getY(), 1);
@@ -70,9 +70,9 @@ public class ShapeTest extends TestCase {
 
 
     public void testGetHighestYForX() throws Exception {
-        int for0 = testShape.getHighestYForX(0);
-        int for1 = testShape.getHighestYForX(1);
-        int for2 = testShape.getHighestYForX(2);
+        int for0 = board.getHighestYForX(0);
+        int for1 = board.getHighestYForX(1);
+        int for2 = board.getHighestYForX(2);
 
         assertEquals(for0, -1);
         assertEquals(for1, 2);
@@ -80,9 +80,9 @@ public class ShapeTest extends TestCase {
     }
 
     public void testGetLeftmostXForY() throws Exception {
-        int for0 = testShape.getLeftmostXForY(0);
-        int for1 = testShape.getLeftmostXForY(1);
-        int for2 = testShape.getLeftmostXForY(2);
+        int for0 = board.getLeftmostXForY(0);
+        int for1 = board.getLeftmostXForY(1);
+        int for2 = board.getLeftmostXForY(2);
 
         assertEquals(for0, -1);
         assertEquals(for1, 2);
@@ -90,9 +90,9 @@ public class ShapeTest extends TestCase {
     }
 
     public void testGetRightmostXForY() throws Exception {
-        int for0 = testShape.getRightmostXForY(0);
-        int for1 = testShape.getRightmostXForY(1);
-        int for2 = testShape.getRightmostXForY(2);
+        int for0 = board.getRightmostXForY(0);
+        int for1 = board.getRightmostXForY(1);
+        int for2 = board.getRightmostXForY(2);
 
         assertEquals(for0, -1);
         assertEquals(for1, 3);
@@ -101,7 +101,7 @@ public class ShapeTest extends TestCase {
 
 
     public void testGetHighestPoints() throws Exception {
-        List<Point> points = testShape.getHighestPoints();
+        List<Point> points = board.getHighestPoints();
 
         assertEquals(points.size(), 3);
 
@@ -116,7 +116,7 @@ public class ShapeTest extends TestCase {
     }
 
     public void testGetLeftmostPoints() throws Exception {
-        List<Point> points = testShape.getLeftmostPoints();
+        List<Point> points = board.getLeftmostPoints();
 
         assertEquals(points.size(), 2);
 
@@ -128,7 +128,7 @@ public class ShapeTest extends TestCase {
     }
 
     public void testGetRightmostPoints() throws Exception {
-        List<Point> points = testShape.getRightmostPoints();
+        List<Point> points = board.getRightmostPoints();
 
         assertEquals(points.size(), 2);
 
@@ -148,9 +148,9 @@ public class ShapeTest extends TestCase {
                 "-xx--\n" +
                 "-----\n" +
                 "-----\n";
-        assertEquals(testShape.toString(), original);
+        assertEquals(board.toString(), original);
 
-        testShape.rotate();
+        board.rotate();
 
         String rotated =
                 "-----\n" +
@@ -158,7 +158,7 @@ public class ShapeTest extends TestCase {
                 "--xx-\n" +
                 "---x-\n" +
                 "-----\n";
-        assertEquals(testShape.toString(), rotated);
+        assertEquals(board.toString(), rotated);
     }
 
 
@@ -169,6 +169,6 @@ public class ShapeTest extends TestCase {
                 "-xx--\n" +
                 "-----\n" +
                 "-----\n";
-        assertEquals(testShape.toString(), expected);
+        assertEquals(board.toString(), expected);
     }
 }

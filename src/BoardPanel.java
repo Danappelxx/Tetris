@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import Util.Board;
 
 /**
  * Created by dan on 5/9/16.

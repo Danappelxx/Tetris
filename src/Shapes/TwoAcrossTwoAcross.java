@@ -5,6 +5,7 @@ package Shapes;
  */
 
 public class TwoAcrossTwoAcross extends Shape {
+
     public TwoAcrossTwoAcross() {
         super();
     }
@@ -20,7 +21,12 @@ public class TwoAcrossTwoAcross extends Shape {
     }
 
     @Override
-    public void rotate() {
-        // squares dont rotate
+    protected void createBoard() {
+        this.board = new ShapeBoard() {
+            @Override
+            public void rotate() {
+                // squares dont rotate, so do nothing
+            }
+        };
     }
 }

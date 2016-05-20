@@ -1,5 +1,6 @@
+package Util;
+
 import junit.framework.TestCase;
-import Util.Tile;
 
 /**
  * Created by dan on 5/20/16.

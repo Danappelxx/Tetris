@@ -1,9 +1,11 @@
-import java.util.List;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
 import Shapes.Shape;
+import Util.Board;
 import Util.Point;
 import Util.Tile;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by dan on 5/9/16.
@@ -16,6 +18,32 @@ public class ShapeInMotion {
     public ShapeInMotion(Shape shape, Point point) {
         this.shape = shape;
         this.point = point;
+    }
+
+    public ShapeInMotion copy() {
+        Shape shapeCopy = shape.copy();
+        return new ShapeInMotion(shapeCopy, new Point(point.getX(), point.getY()));
+    }
+
+    public Point relativePoint(Point other) {
+        return new Point(
+                other.getX() + point.getX(),
+                other.getY() + point.getY());
+    }
+
+    /**
+     * Takes the shape's tiles and adds them to the Board.
+     */
+    public void addToBoard(Board board) {
+
+        Board shapeBoard = shape.getBoard();
+
+        for (int row = 0; row < shapeBoard.numRows; row++)
+            for (int col = 0; col < shapeBoard.numCols; col++)
+                if (shapeBoard.getTiles()[row][col] != null) {
+                    Tile tile = shapeBoard.getTiles()[row][col];
+                    board.getTiles()[row + point.getY()][col + point.getX()] = tile;
+                }
     }
 
     // MARK: Movement logic
@@ -83,7 +111,7 @@ public class ShapeInMotion {
         ShapeInMotion copy = copy();
 
         // rotate copy
-        copy.getShape().rotate();
+        copy.getShape().getBoard().rotate();
 
         List<Point> points = copy.getPoints();
 
@@ -91,9 +119,9 @@ public class ShapeInMotion {
         Boolean outOfBounds = points.stream()
                 .anyMatch(point -> !(
                         point.getX() >= 0 &&
-                                point.getX() < board.getWidth() &&
-                                point.getY() >= 0 &&
-                                point.getY() < board.getHeight()
+                        point.getX() < board.getWidth() &&
+                        point.getY() >= 0 &&
+                        point.getY() < board.getHeight()
                 ));
 
         if (outOfBounds) return false;
@@ -107,57 +135,34 @@ public class ShapeInMotion {
         return true;
     }
 
-    /**
-     * Takes the shape's tiles and adds them to the Board.
-     */
-    public void addToBoard(Board board) {
-        for (int row = 0; row < Shape.NUM_ROWS; row++) {
-            for (int col = 0; col < Shape.NUM_COLS; col++) {
-                if (shape.getTiles()[row][col] != null) {
-                    Tile tile = shape.getTiles()[row][col];
-                    board.getTiles()[row + point.getY()][col + point.getX()] = tile;
-                }
-            }
-        }
-    }
-
-    public Point relativePoint(Point other) {
-        return new Point(
-            other.getX() + point.getX(),
-            other.getY() + point.getY());
-    }
-
-    public List<Point> getHighestPoints() {
-        return shape.getHighestPoints()
+    // MARK: Getters and Setters
+    private List<Point> getHighestPoints() {
+        return shape.getBoard().getHighestPoints()
                 .stream()
                 .map(this::relativePoint)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public List<Point> getLeftmostPoints() {
-        return shape.getLeftmostPoints()
+    private List<Point> getLeftmostPoints() {
+        return shape.getBoard().getLeftmostPoints()
                 .stream()
                 .map(this::relativePoint)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public List<Point> getRightmostPoints() {
-        return shape.getRightmostPoints()
+    private List<Point> getRightmostPoints() {
+        return shape.getBoard().getRightmostPoints()
                 .stream()
                 .map(this::relativePoint)
                 .collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    public ShapeInMotion copy() {
-        Shape shapeCopy = shape.copy();
-        return new ShapeInMotion(shapeCopy, new Point(point.getX(), point.getY()));
     }
 
     public List<Point> getPoints() {
         List<Point> points = new ArrayList<Point>();
-        for (int x = 0; x < Shape.NUM_COLS; x++)
-            for (int y = 0; y < Shape.NUM_ROWS; y++)
-                if (shape.getTiles()[y][x] != null)
+        Board board = shape.getBoard();
+        for (int x = 0; x < board.numCols; x++)
+            for (int y = 0; y < board.numRows; y++)
+                if (board.getTiles()[y][x] != null)
                     points.add(this.relativePoint(new Point(x, y)));
         return points;
     }

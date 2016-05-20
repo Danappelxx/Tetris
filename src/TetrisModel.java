@@ -1,7 +1,6 @@
+import Util.Board;
 import Util.Point;
-import Util.Tile;
 import Shapes.Shape;
-import java.util.List;
 
 /**
  * Created by dan on 5/10/16.
@@ -21,10 +20,10 @@ public class TetrisModel {
         Shape shape = Shape.createRandomShape();
 
         int minX = 0;
-        int maxX = board.getWidth() - shape.getWidth();
+        int maxX = board.getWidth() - shape.getBoard().getWidth();
 
         int x = (int)(Math.random() * maxX) + minX;
-        int y = 0 - shape.getLowestPoint().getY();
+        int y = 0 - shape.getBoard().getLowestPoint().getY();
 
         return new ShapeInMotion(shape, new Point(x, y));
     }
@@ -78,7 +77,7 @@ public class TetrisModel {
 
         if (!shapeInMotion.canRotate(board)) return;
 
-        shapeInMotion.getShape().rotate();
+        shapeInMotion.getShape().getBoard().rotate();
     }
 
     // MARK: Getters & Setters
