@@ -10,6 +10,7 @@ public class TetrisModel {
 
     private ShapeInMotion shapeInMotion;
     private Board board;
+    private int rowsCleared;
 
     public TetrisModel() {
         this.board = new Board(20, 10);
@@ -23,7 +24,7 @@ public class TetrisModel {
         int maxX = board.getWidth() - shape.getBoard().getWidth();
 
         int x = (int)(Math.random() * maxX) + minX;
-        int y = 0 - shape.getBoard().getLowestPoint().getY();
+        int y = -shape.getBoard().getLowestPoint().getY();
 
         return new ShapeInMotion(shape, new Point(x, y));
     }
@@ -80,11 +81,33 @@ public class TetrisModel {
         shapeInMotion.getShape().getBoard().rotate();
     }
 
+    /**
+     * Checks if any row is full and if so clears it and shifts the rows down.
+     * Clears from the bottom up.
+     */
+    public void clearRows() {
+
+        rowLoop:
+        for (int row = board.numRows - 1; row >= 0; row--) {
+
+            // check if each column has a tile
+            for (int col = 0; col < board.numCols; col++)
+                // if it doesnt have a tile, skip this row
+                if (board.getTiles()[row][col] == null) continue rowLoop;
+
+            board.removeRow(row);
+            rowsCleared++;
+        }
+    }
+
     // MARK: Getters & Setters
     public ShapeInMotion getShapeInMotion() {
         return shapeInMotion;
     }
     public Board getBoardCopy() {
         return new Board(board);
+    }
+    public int getRowsCleared() {
+        return rowsCleared;
     }
 }

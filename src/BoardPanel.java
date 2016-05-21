@@ -1,6 +1,6 @@
+import Util.Board;
 import javax.swing.*;
 import java.awt.*;
-import Util.Board;
 
 /**
  * Created by dan on 5/9/16.
@@ -16,6 +16,9 @@ public class BoardPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        if (board == null) return;
+
         Color oldColor = g.getColor();
 
         final int xOffset = 10;

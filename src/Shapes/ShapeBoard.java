@@ -120,6 +120,7 @@ public class ShapeBoard extends Board {
     }
 
 
+    @Override
     public int getWidth() {
         return getRightmostPoint().getX() - getLeftmostPoint().getX() + 1;
     }

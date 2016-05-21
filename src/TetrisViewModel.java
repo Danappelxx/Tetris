@@ -13,10 +13,12 @@ import Util.Board;
 public class TetrisViewModel {
 
     private Board board;
+    private int score;
 
     public TetrisViewModel(TetrisModel model) {
         // copy the board so that the ViewModel's modifications don't show up everywhere
         board = model.getBoardCopy();
+        score = model.getRowsCleared() * 100;
 
         // ensure that there are no null pointer exceptions when drawing
         board.fillBlank();
@@ -28,4 +30,5 @@ public class TetrisViewModel {
     public Board getBoard() {
         return board;
     }
+    public int getScore() { return score; }
 }

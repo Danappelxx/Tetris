@@ -5,6 +5,7 @@ import junit.framework.TestCase;
 /**
  * Created by dan on 5/20/16.
  */
+
 public class BoardTest extends TestCase {
 
     Board board = new Board(4, 3);
