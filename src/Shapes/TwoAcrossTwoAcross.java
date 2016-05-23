@@ -13,8 +13,8 @@ public class TwoAcrossTwoAcross extends Shape {
     protected String[] getStringRepresentation() {
         return new String[]{
                 "-----",
-                "--xx-",
-                "--xx-",
+                "-xx--",
+                "-xx--",
                 "-----",
                 "-----"
         };
