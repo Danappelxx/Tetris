@@ -1,6 +1,7 @@
+import Shapes.Shape;
 import Util.Board;
 import Util.Point;
-import Shapes.Shape;
+import Util.Tile;
 
 /**
  * Created by dan on 5/10/16.
@@ -43,6 +44,13 @@ public class TetrisModel {
         this.shapeInMotion = shapeInMotion;
     }
 
+    public void checkGameOver() throws TetrisController.GameOverException {
+        // check every tile in topmost row
+        // if any tiles are _not_ null, game over
+        for (Tile tile: board.getTiles()[0])
+            if (tile != null)
+                throw new TetrisController.GameOverException();
+    }
 
     // MARK: Executing movement
     public void drop() {

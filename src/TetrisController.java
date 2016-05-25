@@ -1,8 +1,5 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 /**
  * Created by dan on 5/10/16.
@@ -16,8 +13,10 @@ public class TetrisController {
 
     TetrisView view;
     TetrisModel model;
+    TetrisViewModel viewModel;
 
     Timer timer;
+    KeyListener keyListener;
 
     public TetrisController(TetrisView view, TetrisModel model) {
         this.view = view;
@@ -29,7 +28,7 @@ public class TetrisController {
     }
 
     private void setupKeyListeners() {
-        view.addKeyListener(new KeyAdapter() {
+        keyListener = new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     // LEFT
@@ -58,7 +57,8 @@ public class TetrisController {
                 }
                 tick(false);
             }
-        });
+        };
+        view.addKeyListener(keyListener);
     }
 
     private void setupTimer() {
@@ -78,13 +78,14 @@ public class TetrisController {
         model.clearRows();
 
         try {
+            model.checkGameOver();
             model.createShapeInMotionIfNecessary();
         } catch (GameOverException e) {
             gameOver();
             return;
         }
 
-        TetrisViewModel viewModel = new TetrisViewModel(model);
+        viewModel = new TetrisViewModel(model);
         view.configure(viewModel);
 
         view.repaint();
@@ -92,8 +93,8 @@ public class TetrisController {
 
     private void gameOver() {
         timer.stop();
+        view.removeKeyListener(keyListener);
 
-        // TODO: Replace this with a popup or something
-        System.out.println("Game over!");
+        view.displayGameOverDialog(viewModel.getScore());
     }
 }
