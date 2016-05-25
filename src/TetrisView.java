@@ -63,6 +63,8 @@ public class TetrisView extends JFrame {
         info.setAlignmentX(Component.CENTER_ALIGNMENT);
         exit.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        exit.setFocusable(false);
+
         content.add(info);
         content.add(exit);
         dialog.add(content);

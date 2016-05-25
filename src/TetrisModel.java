@@ -32,16 +32,10 @@ public class TetrisModel {
         return new ShapeInMotion(shape, new Point(x, y));
     }
 
-    public void createShapeInMotionIfNecessary() throws TetrisController.GameOverException {
+    public void createShapeInMotionIfNecessary() {
         if (shapeInMotion != null) return;
 
         ShapeInMotion shapeInMotion = createShapeInMotion();
-
-        // ensure that no points of the rotated shape overlap with current points on the board
-        Boolean overlaps = shapeInMotion.getPoints().stream()
-                .anyMatch(point -> this.board.getTiles()[point.getY()][point.getX()] != null);
-
-        if (overlaps) throw new TetrisController.GameOverException();
 
         this.shapeInMotion = shapeInMotion;
     }

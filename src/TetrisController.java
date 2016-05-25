@@ -79,11 +79,12 @@ public class TetrisController {
 
         try {
             model.checkGameOver();
-            model.createShapeInMotionIfNecessary();
         } catch (GameOverException e) {
             gameOver();
             return;
         }
+
+        model.createShapeInMotionIfNecessary();
 
         viewModel = new TetrisViewModel(model);
         view.configure(viewModel);
