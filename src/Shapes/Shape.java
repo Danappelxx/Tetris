@@ -1,12 +1,8 @@
 package Shapes;
 
+import Util.Tile;
 import com.sun.istack.internal.NotNull;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import Util.Tile;
-import Util.Point;
-import Util.Board;
 
 /**
  * Created by dan on 5/9/16.

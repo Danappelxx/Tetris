@@ -92,8 +92,11 @@ public class TetrisModel {
     /**
      * Checks if any row is full and if so clears it and shifts the rows down.
      * Clears from the bottom up.
+     * Only checks for tiles that have fallen (shape in motion is ignored).
      */
     public void clearRows() {
+
+        int rowsCleared = 0;
 
         for (int _ = 0; _ < board.numRows; _++)
             rowLoop:
@@ -107,6 +110,9 @@ public class TetrisModel {
                 board.removeRow(row);
                 rowsCleared++;
             }
+
+        // score multiplier
+        this.rowsCleared += rowsCleared * rowsCleared;
     }
 
     // MARK: Getters & Setters
