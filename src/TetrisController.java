@@ -48,6 +48,11 @@ public class TetrisController {
                     case 40:
                         tick(true);
                         return;
+                    // SPACE
+                    case 32:
+                        model.drop();
+                        tick(true);
+                        return;
                     default:
                         return;
                 }

@@ -45,6 +45,14 @@ public class TetrisModel {
 
 
     // MARK: Executing movement
+    public void drop() {
+        if (shapeInMotion == null) return;
+
+        while (shapeInMotion.canGoDown(board)) {
+            shapeInMotion.getPoint().setY(shapeInMotion.getPoint().getY() + 1);
+        }
+    }
+
     public void shiftDownIfPossible() {
         if (shapeInMotion == null) return;
 
