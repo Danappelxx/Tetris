@@ -24,6 +24,7 @@ public class TetrisViewModel {
         board.fillBlank();
 
         // stamp the shape onto the board
+        model.getShadow().addToBoard(board);
         model.getShapeInMotion().addToBoard(board);
     }
 

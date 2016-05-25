@@ -22,7 +22,10 @@ public class Board {
         this(from.numRows, from.numCols);
         for (int row = 0; row < numRows; row++)
             for (int col = 0; col < numCols; col++)
-                tiles[row][col] = from.getTiles()[row][col];
+                if (from.getTiles()[row][col] != null)
+                    tiles[row][col] = from.getTiles()[row][col].copy();
+                else
+                    tiles[row][col] = null;
     }
 
     public void forEachTile(Consumer<Tile> f) {

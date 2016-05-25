@@ -3,6 +3,8 @@ import Util.Board;
 import Util.Point;
 import Util.Tile;
 
+import java.awt.*;
+
 /**
  * Created by dan on 5/10/16.
  */
@@ -54,10 +56,15 @@ public class TetrisModel {
 
     // MARK: Executing movement
     public void drop() {
-        if (shapeInMotion == null) return;
+        drop(shapeInMotion);
+    }
 
-        while (shapeInMotion.canGoDown(board)) {
-            shapeInMotion.getPoint().setY(shapeInMotion.getPoint().getY() + 1);
+    public void drop(ShapeInMotion shape) {
+
+        if (shape == null) return;
+
+        while (shape.canGoDown(board)) {
+            shape.getPoint().setY(shape.getPoint().getY() + 1);
         }
     }
 
@@ -121,6 +128,17 @@ public class TetrisModel {
 
         // score multiplier
         this.rowsCleared += rowsCleared * rowsCleared;
+    }
+
+    public ShapeInMotion getShadow() {
+        ShapeInMotion shadow = new ShapeInMotion(getShapeInMotion().getShape().copy(), getShapeInMotion().getPoint().copy());
+        shadow.getShape().getBoard().forEachTile(tile -> {
+            if (tile != null)
+                tile.setColor(Color.GRAY);
+        });
+
+        drop(shadow);
+        return shadow;
     }
 
     // MARK: Getters & Setters

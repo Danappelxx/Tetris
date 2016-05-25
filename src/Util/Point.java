@@ -27,6 +27,8 @@ public class Point {
         this.y = y;
     }
 
+    public Point copy() { return new Point(x, y); }
+
     @Override
     public String toString() {
         return "(" + x + "," + y + ")";

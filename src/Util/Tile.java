@@ -10,6 +10,12 @@ public class Tile {
 
     public Tile() {}
 
+    public Tile copy() {
+        Tile tile = new Tile();
+        tile.color = color;
+        return tile;
+    }
+
     public Color getColor() {
         return color;
     }
