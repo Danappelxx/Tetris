@@ -87,17 +87,18 @@ public class TetrisModel {
      */
     public void clearRows() {
 
-        rowLoop:
-        for (int row = board.numRows - 1; row >= 0; row--) {
+        for (int _ = 0; _ < board.numRows; _++)
+            rowLoop:
+            for (int row = board.numRows - 1; row >= 0; row--) {
 
-            // check if each column has a tile
-            for (int col = 0; col < board.numCols; col++)
-                // if it doesnt have a tile, skip this row
-                if (board.getTiles()[row][col] == null) continue rowLoop;
+                // check if each column has a tile
+                for (int col = 0; col < board.numCols; col++)
+                    // if it doesnt have a tile, skip this row
+                    if (board.getTiles()[row][col] == null) continue rowLoop;
 
-            board.removeRow(row);
-            rowsCleared++;
-        }
+                board.removeRow(row);
+                rowsCleared++;
+            }
     }
 
     // MARK: Getters & Setters
