@@ -1,8 +1,11 @@
 package Shapes;
 
 import Util.Tile;
-import com.sun.istack.internal.NotNull;
+
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by dan on 5/9/16.
@@ -20,15 +23,15 @@ public abstract class Shape {
         Color.YELLOW
     };
 
-    public static final Class<?>[] SHAPE_CLASSES = new Class<?>[]{
-            FiveAcross.class,
-            ThreeAcrossOneDownLeft.class,
-            ThreeAcrossOneDownRight.class,
-            ThreeAcrossOneUp.class,
-            TwoAcrossTwoAcross.class,
-            TwoAcrossTwoAcrossLeft.class,
-            TwoAcrossTwoAcrossRight.class
-    };
+    public static List<Shape> SHAPE_TEMPLATES = new ArrayList(Arrays.asList(new Shape[]{
+            new FiveAcross(),
+            new ThreeAcrossOneDownLeft(),
+            new ThreeAcrossOneDownRight(),
+            new ThreeAcrossOneUp(),
+            new TwoAcrossTwoAcross(),
+            new TwoAcrossTwoAcrossLeft(),
+            new TwoAcrossTwoAcrossRight()
+    }));
 
     protected ShapeBoard board;
 
@@ -39,17 +42,23 @@ public abstract class Shape {
     public Shape() {
         createBoard();
 
-        color = COLORS[(int)(Math.random()*COLORS.length)];
+        color = Shape.getRandomColor();
+
+        String[] representation = getStringRepresentation();
 
         for (int row = 0; row < board.numRows; row++) {
             for (int col = 0; col < board.numCols; col++) {
                 // if tile should be here, make it. otherwise, keep it null
-                if (getStringRepresentation()[row].charAt(col) == 'x') {
+                if (representation[row].charAt(col) == 'x') {
                     board.getTiles()[row][col] = new Tile();
                     board.getTiles()[row][col].setColor(color);
                 }
             }
         }
+    }
+
+    public static Color getRandomColor() {
+        return COLORS[(int)(Math.random()*COLORS.length)];
     }
 
     public Shape copy() {
@@ -63,14 +72,11 @@ public abstract class Shape {
         }
     }
 
-    @NotNull
     public static Shape createRandomShape() {
-        Class<?> shapeClass = Shape.SHAPE_CLASSES[(int)(Math.random() * Shape.SHAPE_CLASSES.length)];
-        try {
-            return ((Class<Shape>)shapeClass).newInstance();
-        } catch (Exception e) {
-            return null;
-        }
+        Shape template = Shape.SHAPE_TEMPLATES.get((int)(Math.random() * Shape.SHAPE_TEMPLATES.size()));
+        Shape copy = template.copy();
+        copy.setColor(Shape.getRandomColor());
+        return copy;
     }
 
     protected void createBoard() {
@@ -79,5 +85,18 @@ public abstract class Shape {
 
     public ShapeBoard getBoard() {
         return this.board;
+    }
+
+    public void setBoard(ShapeBoard board) {
+        this.board = board;
+    }
+
+    public void setColor(Color newColor) {
+        this.board.forEachTile(tile -> {
+            if (tile == null) return;
+            if (tile.getColor() == color)
+                tile.setColor(newColor);
+        });
+        this.color = newColor;
     }
 }

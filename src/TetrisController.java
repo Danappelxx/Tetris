@@ -1,3 +1,5 @@
+import Shapes.Shape;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -17,14 +19,31 @@ public class TetrisController {
 
     Timer timer;
     KeyListener keyListener;
+    ActionListener addShapeButtonActionListener;
 
     public TetrisController(TetrisView view, TetrisModel model) {
         this.view = view;
         this.model = model;
 
         setupKeyListeners();
+        setupButtonListeners();
         setupTimer();
         tick(true);
+    }
+
+    private void setupButtonListeners() {
+        addShapeButtonActionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddShapeDialog addShapeDialog = new AddShapeDialog();
+                timer.stop();
+                Shape createdShape = addShapeDialog.getCreatedShape();
+                if (createdShape != null)
+                    Shape.SHAPE_TEMPLATES.add(createdShape);
+                timer.start();
+            }
+        };
+        view.addAddShapeActionListener(addShapeButtonActionListener);
     }
 
     private void setupKeyListeners() {
@@ -95,6 +114,7 @@ public class TetrisController {
     private void gameOver() {
         timer.stop();
         view.removeKeyListener(keyListener);
+        view.removeAddShapeActionListener(addShapeButtonActionListener);
 
         view.displayGameOverDialog(viewModel.getScore());
     }

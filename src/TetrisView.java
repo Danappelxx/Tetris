@@ -55,7 +55,7 @@ public class TetrisView extends JFrame {
 
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
-        dialog.setSize(200, 100);
+        dialog.setSize(250, 100);
         info.setPreferredSize(new Dimension(dialog.getWidth() - 10, dialog.getHeight() / 2));
         exit.setPreferredSize(new Dimension(dialog.getWidth() - 10, dialog.getHeight() / 2));
 
@@ -70,5 +70,12 @@ public class TetrisView extends JFrame {
         dialog.add(content);
 
         dialog.setVisible(true);
+    }
+
+    public void addAddShapeActionListener(ActionListener listener) {
+        infoPanel.getAddShapeButton().addActionListener(listener);
+    }
+    public void removeAddShapeActionListener(ActionListener listener) {
+        infoPanel.getAddShapeButton().removeActionListener(listener);
     }
 }

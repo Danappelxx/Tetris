@@ -13,7 +13,7 @@ public class ThreeAcrossOneUp extends Shape {
         return new String[]{
                 "-----",
                 "--x--",
-                "-xxx--",
+                "-xxx-",
                 "-----",
                 "-----"
         };

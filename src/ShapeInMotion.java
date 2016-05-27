@@ -59,9 +59,11 @@ public class ShapeInMotion {
 
         // check if it has a tile below it
         for (Point point: shapeHighestPoints) {
-            Tile tileBelow = board.getTiles()[point.getY() + 1][point.getX()];
+            try {
+                Tile tileBelow = board.getTiles()[point.getY() + 1][point.getX()];
 
-            if (tileBelow != null) return false;
+                if (tileBelow != null) return false;
+            } catch (NullPointerException e) {}
         }
 
         return true;
