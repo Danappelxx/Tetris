@@ -101,7 +101,6 @@ public class AddShapeDialog extends JDialog {
 
     public Shape getCreatedShape() {
         setVisible(true);
-        System.out.println(createdShape.getBoard().toString());
         return createdShape;
     }
 

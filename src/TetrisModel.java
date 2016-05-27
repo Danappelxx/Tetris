@@ -14,6 +14,7 @@ public class TetrisModel {
     private ShapeInMotion shapeInMotion;
     private Board board;
     private int rowsCleared;
+    private int rowsSkipped;
 
     public TetrisModel() {
         this.board = new Board(20, 10);
@@ -51,15 +52,16 @@ public class TetrisModel {
     }
 
     // MARK: Executing movement
-    public void drop() {
-        drop(shapeInMotion);
+    public void drop(boolean countPoints) {
+        drop(shapeInMotion, countPoints);
     }
 
-    public void drop(ShapeInMotion shape) {
+    public void drop(ShapeInMotion shape, boolean countPoints) {
 
         if (shape == null) return;
 
         while (shape.canGoDown(board)) {
+            if (countPoints) rowsSkipped++;
             shape.getPoint().setY(shape.getPoint().getY() + 1);
         }
     }
@@ -133,7 +135,7 @@ public class TetrisModel {
                 tile.setColor(Color.GRAY);
         });
 
-        drop(shadow);
+        drop(shadow, false);
         return shadow;
     }
 
@@ -146,5 +148,8 @@ public class TetrisModel {
     }
     public int getRowsCleared() {
         return rowsCleared;
+    }
+    public int getRowsSkipped() {
+        return rowsSkipped;
     }
 }

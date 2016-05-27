@@ -18,7 +18,7 @@ public class TetrisViewModel {
     public TetrisViewModel(TetrisModel model) {
         // copy the board so that the ViewModel's modifications don't show up everywhere
         board = model.getBoardCopy();
-        score = model.getRowsCleared() * 100;
+        score = model.getRowsCleared()*100 + model.getRowsSkipped();
 
         // ensure that there are no null pointer exceptions when drawing
         board.fillBlank();
