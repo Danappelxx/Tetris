@@ -1,5 +1,6 @@
 package Shapes;
 
+import Util.Board;
 import Util.Tile;
 
 import java.awt.*;
@@ -40,7 +41,9 @@ public abstract class Shape {
     protected abstract String[] getStringRepresentation();
 
     public Shape() {
-        createBoard();
+        try {
+            board = getBoardClass().newInstance();
+        } catch (Exception e) {}
 
         color = Shape.getRandomColor();
 
@@ -64,7 +67,7 @@ public abstract class Shape {
     public Shape copy() {
         try {
             Shape copy = this.getClass().newInstance();
-            copy.board = new ShapeBoard(this.board);
+            copy.board = this.getBoardClass().getConstructor(Board.class).newInstance(this.getBoard());
             copy.color = this.color;
             return copy;
         } catch (Exception e) {
@@ -79,8 +82,8 @@ public abstract class Shape {
         return copy;
     }
 
-    protected void createBoard() {
-        this.board = new ShapeBoard();
+    protected Class<? extends ShapeBoard> getBoardClass() {
+        return ShapeBoard.class;
     }
 
     public ShapeBoard getBoard() {

@@ -63,7 +63,7 @@ public class ShapeInMotion {
                 Tile tileBelow = board.getTiles()[point.getY() + 1][point.getX()];
 
                 if (tileBelow != null) return false;
-            } catch (NullPointerException e) {}
+            } catch (ArrayIndexOutOfBoundsException e) {}
         }
 
         return true;
