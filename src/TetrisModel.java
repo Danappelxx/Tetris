@@ -25,9 +25,7 @@ public class TetrisModel {
         Shape shape = Shape.createRandomShape();
 
         int minX = 0;
-        int maxX = board.getWidth() - shape
-                .getBoard()
-                .getWidth();
+        int maxX = board.getWidth() - shape.getBoard().getWidth() - 1;
 
         int x = (int)(Math.random() * maxX) + minX;
         int y = -shape.getBoard().getLowestPoint().getY();
