@@ -58,6 +58,11 @@ public abstract class Shape {
                 }
             }
         }
+
+        int rotationCount = (int)(Math.random() * 3);
+        for (int i = 0; i < rotationCount; i++) {
+            board.rotate();
+        }
     }
 
     public static Color getRandomColor() {
