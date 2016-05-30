@@ -18,6 +18,7 @@ public class TetrisController {
     TetrisViewModel viewModel;
 
     Timer timer;
+    MusicPlayer musicPlayer;
     KeyListener keyListener;
     ActionListener addShapeButtonActionListener;
 
@@ -25,10 +26,16 @@ public class TetrisController {
         this.view = view;
         this.model = model;
 
+        playMusic();
         setupKeyListeners();
         setupButtonListeners();
         setupTimer();
         tick(true);
+    }
+
+    private void playMusic() {
+        musicPlayer = new MusicPlayer();
+        musicPlayer.start();
     }
 
     private void setupButtonListeners() {
@@ -113,6 +120,7 @@ public class TetrisController {
 
     private void gameOver() {
         timer.stop();
+        musicPlayer.stop();
         view.removeKeyListener(keyListener);
         view.removeAddShapeActionListener(addShapeButtonActionListener);
 
